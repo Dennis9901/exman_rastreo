@@ -1,6 +1,4 @@
-import dj_database_url
 import os
-
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = 'examen-rastreo-key'
@@ -16,8 +14,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'vehiculos',
-    'drf_yasg',
-
 ]
 
 MIDDLEWARE = [
@@ -45,17 +41,19 @@ TEMPLATES = [{
 WSGI_APPLICATION = 'examen_rastreo.wsgi.application'
 
 DATABASES = {
-    'default': dj_database_url.config(
-        default='sqlite:///db.sqlite3'
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
 }
 
 AUTH_PASSWORD_VALIDATORS = []
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = USE_L10N = USE_TZ = True
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # para collectstatic
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': ['rest_framework.authentication.SessionAuthentication'],
     'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.IsAuthenticated']
