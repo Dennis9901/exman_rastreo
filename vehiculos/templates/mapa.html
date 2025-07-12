@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mapa de Vehículos</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</head>
+<body>
+<h2>Mis Vehículos</h2>
+<div id="map" style="height: 500px;"></div>
+<script>
+  var map = L.map('map').setView([19.4326, -99.1332], 6);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+  fetch('/api/vehiculos/')
+    .then(res => res.json())
+    .then(data => {
+        data.forEach(v => {
+            L.marker([v.lat, v.lon])
+              .addTo(map)
+              .bindPopup(v.placas);
+        });
+    });
+</script>
+</body>
+</html>
