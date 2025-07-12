@@ -82,7 +82,7 @@ curl.exe -b cookies.txt -X PUT http://localhost:8000/api/vehiculos/id/ `
 ```
 
 
-Pruebas Editado:
+Pruebas Eliminado:
 ```bash
 
 curl.exe -b cookies.txt -X DELETE http://localhost:8000/api/vehiculos/id/ `
