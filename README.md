@@ -17,14 +17,15 @@ Select-String -Path login.html -Pattern 'csrfmiddlewaretoken' | ForEach-Object {
   $_ -match 'value="(.+?)"' | Out-Null
   $GLOBALS:csrfToken = $matches[1]
 }
-
-
+```
+```bash
 #Login
 curl.exe -b cookies.txt -c cookies.txt -X POST http://localhost:8000/accounts/login/ `
   -H "Content-Type: application/x-www-form-urlencoded" `
   -H "Referer: http://localhost:8000/accounts/login/" `
   -d "username=admin&password=admin123&csrfmiddlewaretoken=$csrfToken"
-
+```
+```bash
 
 
 # Crear objetos
@@ -39,8 +40,27 @@ curl.exe -b cookies.txt -c cookies.txt -X POST http://localhost:8000/accounts/lo
 @'
 { "placas": "XYZ003", "lat": 19.45, "lon": -99.15 }
 '@ | Out-File -Encoding ASCII data3.json
+```
+```bash
 
 #Ejecutar Curls
+curl.exe -b cookies.txt -X POST http://localhost:8000/api/vehiculos/ `
+  -H "Content-Type: application/json" `
+  -H "X-CSRFToken: $csrfToken" `
+  -H "Referer: http://localhost:8000/api/vehiculos/" `
+  --data "@data1.json"
+
+curl.exe -b cookies.txt -X POST http://localhost:8000/api/vehiculos/ `
+  -H "Content-Type: application/json" `
+  -H "X-CSRFToken: $csrfToken" `
+  -H "Referer: http://localhost:8000/api/vehiculos/" `
+  --data "@data2.json"
+
+curl.exe -b cookies.txt -X POST http://localhost:8000/api/vehiculos/ `
+  -H "Content-Type: application/json" `
+  -H "X-CSRFToken: $csrfToken" `
+  -H "Referer: http://localhost:8000/api/vehiculos/" `
+  --data "@data3.json"
 
 
 ```
