@@ -1,0 +1,17 @@
+# render.yaml
+services:
+  - type: web
+    name: exman-rastreo
+    env: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn examen_rastreo.wsgi:application"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: exman-db
+          property: connectionString
+
+databases:
+  - name: exman-db
+    databaseName: exman
+    user: exman_user
